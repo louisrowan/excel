@@ -17,11 +17,11 @@ const SpreadsheetContainer = React.createClass({
     var { cells } = this.state
     console.log(cells)
 
-    var renderCells = cells.map((row) => {
-      var row = row.map((cell) => {
-        return <Cell />
+    var renderCells = cells.map((row, ri) => {
+      row = row.map((cell, ci) => {
+        return <Cell key={ci} />
       })
-      return <tr>{row}</tr>
+      return <tr key={ri}>{row}</tr>
     })
 
     return (
