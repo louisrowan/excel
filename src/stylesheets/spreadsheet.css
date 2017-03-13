@@ -1,5 +1,4 @@
 #spreadsheet-container {
-  height: 100px;
-  width: 100px;
-  background: red;
+  padding-top: 150px;
+  width: 100%;
 }
