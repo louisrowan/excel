@@ -1,0 +1,3 @@
+.input-cell:hover, .input-cell:focus {
+  cursor: cell;
+}
