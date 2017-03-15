@@ -47,6 +47,7 @@ const Cell = React.createClass({
 
   render(){
     var { value, style, active, copy } = this.state
+    var { id } = this.props
 
     var cellClass;
     if (active) cellClass += ' cell-active'
@@ -58,6 +59,7 @@ const Cell = React.createClass({
           style={style}
           type='text'
           value={value}
+          id={id}
           onChange={(e) => this.handleChange(e)}
           />
       </td>
