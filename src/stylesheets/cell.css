@@ -24,3 +24,16 @@ td {
 .cell-active {
   border: 2px solid green;
 }
+
+.cell-copy {
+  animation: border-animate 500ms linear infinite;
+}
+
+@keyframes border-animate {
+  0%, 100% {
+    border: 1px dashed black;
+  }
+  50% {
+    border: 1px dashed transparent;
+  }
+}

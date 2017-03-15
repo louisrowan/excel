@@ -4,7 +4,8 @@ const {
   UPDATE_CURRENT_CELL,
   HANDLE_COPY,
   HANDLE_PASTE,
-  END_PASTE } = require('./Reducers')
+  END_PASTE,
+  END_COPY } = require('./Reducers')
 
 export function setCurrentStyle(style) {
   return { type: SET_CURRENT_STYLE, style}
@@ -28,4 +29,8 @@ export function handlePaste(cell) {
 
 export function endPaste(){
   return { type: END_PASTE}
+}
+
+export function endCopy(){
+  return { type: END_COPY}
 }

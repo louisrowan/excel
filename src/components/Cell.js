@@ -8,7 +8,8 @@ const Cell = React.createClass({
     return {
       value: '',
       style: {},
-      active: false
+      active: false,
+      copy: false
     }
   },
 
@@ -27,10 +28,15 @@ const Cell = React.createClass({
   },
 
   componentWillReceiveProps(props){
+    if (!props.copy) {
+      this.setState({ copy: false })
+    }
     if (props.paste && (props.currentCell.id === this.props.id)) {
       this.setState({ style: props.style, value: props.value })
       this.props.dispatchEndPaste()
       this.props.dispatchSetCurrentStyle(props.style)
+    } else if ((props.copy === this.props.id) && (props.currentCell.id === this.props.id)) {
+      this.setState({ copy: true })
     } else if (props.currentCell.id === this.props.id) {
       this.setState({ style: props.currentStyle, active: true })
     } else {
@@ -40,14 +46,15 @@ const Cell = React.createClass({
   },
 
   render(){
-    var { value, style, active } = this.state
-    if (active) {
-      console.log('sty=', style)
-    }
+    var { value, style, active, copy } = this.state
+
+    var cellClass;
+    if (active) cellClass += ' cell-active'
+    if (copy) cellClass += ' cell-copy'
 
     return (
       <td onFocus={this.handleFocus}>
-        <input className={'input-cell ' + (active ? 'cell-active' : '')}
+        <input className={'input-cell ' + cellClass}
           style={style}
           type='text'
           value={value}
@@ -63,6 +70,7 @@ const mapStateToProps = (state) => {
     currentStyle: state.currentStyle,
     currentCell: state.currentCell,
     paste: state.paste,
+    copy: state.copy,
     value: state.value,
     style: state.style
   }
