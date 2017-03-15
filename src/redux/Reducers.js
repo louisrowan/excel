@@ -6,6 +6,7 @@ export const HANDLE_PASTE = 'handle_paste'
 export const END_PASTE = 'end_paste'
 export const END_COPY = 'end_copy'
 export const HANDLE_DRAG = 'handle_drag'
+export const END_DRAG = 'end_drag'
 
 const DEFAULT_STATE = {
   currentStyle: {}
@@ -71,6 +72,20 @@ const endPaste = (state, action) => {
   return newState
 }
 
+const handleDrag = (state, action) => {
+  const newState = {}
+  const dragged = {dragged: action.coords}
+  Object.assign(newState, state, dragged)
+  return newState
+}
+
+const endDrag = (state, action) => {
+  const newState = {}
+  const dragged = {dragged: false}
+  Object.assign(newState, state, dragged)
+  return newState
+}
+
 export const rootReducer = (state = DEFAULT_STATE, action) => {
   switch (action.type) {
     case SET_CURRENT_STYLE:
@@ -87,6 +102,10 @@ export const rootReducer = (state = DEFAULT_STATE, action) => {
       return endPaste(state, action)
     case END_COPY:
       return endCopy(state, action)
+    case HANDLE_DRAG:
+      return handleDrag(state, action)
+    case END_DRAG:
+      return endDrag(state, action)
     default:
       return state
   }

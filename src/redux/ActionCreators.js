@@ -5,7 +5,9 @@ const {
   HANDLE_COPY,
   HANDLE_PASTE,
   END_PASTE,
-  END_COPY } = require('./Reducers')
+  END_COPY,
+  HANDLE_DRAG,
+  END_DRAG } = require('./Reducers')
 
 export function setCurrentStyle(style) {
   return { type: SET_CURRENT_STYLE, style}
@@ -33,4 +35,12 @@ export function endPaste(){
 
 export function endCopy(){
   return { type: END_COPY}
+}
+
+export function handleDrag(coords){
+  return { type: HANDLE_DRAG, coords}
+}
+
+export function endDrag(){
+  return { type: END_DRAG}
 }

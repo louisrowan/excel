@@ -2,7 +2,7 @@ const React = require('react')
 const SpreadsheetContainer = require('./SpreadsheetContainer')
 const MenuContainer = require('./MenuContainer')
 const { connect } = require('react-redux')
-const { endCopy } = require('../redux/ActionCreators')
+const { endCopy, handleDrag, endDrag } = require('../redux/ActionCreators')
 
 const App = React.createClass({
 
@@ -15,10 +15,8 @@ const App = React.createClass({
 
   componentDidMount(){
     window.addEventListener('keydown', (e) => this.handleKeyPress(e))
-    window.addEventListener('mousedown', (e) => this.handleDragStart(e))
-    window.addEventListener('mousemove', (e) =>
-      this.handleDragOver(e))
-    window.addEventListener('mouseup', (e) => this.handleDragEnd(e))
+    // window.addEventListener('mousedown', (e) => this.handleDragStart(e))
+    // window.addEventListener('mouseup', (e) => this.handleDragEnd(e))
   },
 
   handleDragStart(e){
@@ -26,25 +24,14 @@ const App = React.createClass({
     this.setState({ dragging: true})
   },
 
-  handleDragOver(e){
-    if (this.state.dragging){
-      
-    }
-  },
-
   handleDragEnd(e) {
     if ((e.target.classList.contains('input-cell') && this.state.start.classList.contains('input-cell'))) {
-      var start_id = this.state.start.id.split('_')
-      var end_id = e.target.id.split('_')
 
-      var start_row = +start_id[0]
-      var start_col = +start_id[1]
-      var end_row = +end_id[0]
-      var end_col = +end_id[1]
-      console.log(start_row, start_col)
-      console.log(end_row, end_col)
+      console.log('show final drag state')
+    } else {
+      console.log('remove drag imagdry')
     }
-
+    this.props.dispatchEndDrag()
     this.setState({ dragging: false, start: '' })
   },
 
@@ -63,18 +50,20 @@ const App = React.createClass({
   },
 
   handleArrowPress(e, id) {
+    var update;
+    var newVal;
     if (e.code === 'ArrowDown'){
-      var update = (+id[0] + 1).toString()
-      var newVal = [...update, ...id[1]].join('_')
+      update = (+id[0] + 1).toString()
+      newVal = [...update, ...id[1]].join('_')
     } else if (e.code === 'ArrowUp'){
-      var update = (+id[0] - 1).toString()
-      var newVal = [...update, ...id[1]].join('_')      
+      update = (+id[0] - 1).toString()
+      newVal = [...update, ...id[1]].join('_')      
     } else if (e.code === 'ArrowLeft'){
-      var update = (+id[1] - 1).toString()
-      var newVal = [...id[0], ...update].join('_')      
+      update = (+id[1] - 1).toString()
+      newVal = [...id[0], ...update].join('_')      
     } else if (e.code === 'ArrowRight'){
-      var update = (+id[1] + 1).toString()
-      var newVal = [...id[0], ...update].join('_')
+      update = (+id[1] + 1).toString()
+      newVal = [...id[0], ...update].join('_')
     }
     var newCell = document.getElementById(newVal)
     if (newCell) newCell.focus()
@@ -100,6 +89,12 @@ const mapDispatchToProps = (dispatch) => {
   return {
     dispatchEndCopy(){
       dispatch(endCopy())
+    },
+    dispatchHandleDrag(coords){
+      dispatch(handleDrag(coords))
+    },
+    dispatchEndDrag(){
+      dispatch(endDrag())
     }
   }
 }
