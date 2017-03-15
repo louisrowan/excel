@@ -1,13 +1,14 @@
 const React = require('react')
 const { connect } = require('react-redux')
-const { setCurrentStyle } = require('../redux/ActionCreators')
+const { setCurrentStyle, updateCurrentCell } = require('../redux/ActionCreators')
 
 const Cell = React.createClass({
 
   getInitialState(){
     return {
       value: '',
-      style: {}
+      style: {},
+      active: false
     }
   },
 
@@ -15,20 +16,26 @@ const Cell = React.createClass({
     this.setState({ value: e.target.value })
   },
 
-  clicked(){
+  handleFocus(){
+    this.props.dispatchUpdateCurrentCell(this.props.id)
     this.props.dispatchSetCurrentStyle(this.state.style)
   },
 
   componentWillReceiveProps(props){
-    this.setState({ style: props.currentStyle })
+    if (props.currentCell === this.props.id) {
+      this.setState({ style: props.currentStyle, active: true })
+    } else {
+      this.setState({ active: false})
+    }
   },
 
   render(){
-    var { value, style } = this.state
+    var { value, style, active } = this.state
 
     return (
-      <td onClick={this.clicked}>
-        <input className='input-cell' style={style}
+      <td onFocus={this.handleFocus}>
+        <input className={'input-cell ' + (active ? 'cell-active' : '')}
+          style={style}
           type='text'
           value={value}
           onChange={(e) => this.handleChange(e)}
@@ -40,7 +47,8 @@ const Cell = React.createClass({
 
 const mapStateToProps = (state) => {
   return {
-    currentStyle: state.currentStyle
+    currentStyle: state.currentStyle,
+    currentCell: state.currentCell
   }
 }
 
@@ -48,6 +56,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     dispatchSetCurrentStyle (style) {
       dispatch(setCurrentStyle(style))
+    },
+    dispatchUpdateCurrentCell (cell) {
+      dispatch(updateCurrentCell(cell))
     }
   }
 }

@@ -1,3 +1,11 @@
 .input-cell:hover, .input-cell:focus {
   cursor: cell;
 }
+
+.input-cell {
+  width: 200px;
+}
+
+.cell-active {
+  border: 1px solid black;
+}

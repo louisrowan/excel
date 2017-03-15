@@ -1,5 +1,6 @@
 export const SET_CURRENT_STYLE = 'set_current_style'
 export const UPDATE_CURRENT_STYLE = 'update_current_style'
+export const UPDATE_CURRENT_CELL = 'update_current_cell'
 
 const DEFAULT_STATE = {
   currentStyle: {}
@@ -32,12 +33,21 @@ const updateCurrentStyle = (state, action) => {
 
 }
 
+const updateCurrentCell = (state, action) => {
+  const newState = {}
+  const current = {currentCell: action.cell}
+  Object.assign(newState, state, current)
+  return newState
+}
+
 export const rootReducer = (state = DEFAULT_STATE, action) => {
   switch (action.type) {
     case SET_CURRENT_STYLE:
       return setCurrentStyle(state, action)
     case UPDATE_CURRENT_STYLE:
       return updateCurrentStyle(state, action)
+    case UPDATE_CURRENT_CELL:
+      return updateCurrentCell(state, action)
     default:
       return state
   }

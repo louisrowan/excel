@@ -18,7 +18,7 @@ const SpreadsheetContainer = React.createClass({
 
     var renderCells = cells.map((row, ri) => {
       row = row.map((cell, ci) => {
-        return <Cell key={ci} />
+        return <Cell key={`r${ri}_c${ci}`} id={`r${ri}_c${ci}`} />
       })
       return <tr key={ri}>{row}</tr>
     })
