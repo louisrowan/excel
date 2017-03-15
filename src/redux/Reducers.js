@@ -5,6 +5,7 @@ export const HANDLE_COPY = 'handle_copy'
 export const HANDLE_PASTE = 'handle_paste'
 export const END_PASTE = 'end_paste'
 export const END_COPY = 'end_copy'
+export const HANDLE_DRAG = 'handle_drag'
 
 const DEFAULT_STATE = {
   currentStyle: {}
