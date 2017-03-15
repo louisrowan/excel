@@ -1,6 +1,9 @@
 export const SET_CURRENT_STYLE = 'set_current_style'
 export const UPDATE_CURRENT_STYLE = 'update_current_style'
 export const UPDATE_CURRENT_CELL = 'update_current_cell'
+export const HANDLE_COPY = 'handle_copy'
+export const HANDLE_PASTE = 'handle_paste'
+export const END_PASTE = 'end_paste'
 
 const DEFAULT_STATE = {
   currentStyle: {}
@@ -40,6 +43,25 @@ const updateCurrentCell = (state, action) => {
   return newState
 }
 
+const handleCopy = (state, action) => {
+  const newState = {}
+  const copy = {value: state.currentCell.value, style: state.currentStyle}
+  Object.assign(newState, state, copy)
+  return newState
+}
+
+const handlePaste = (state, action) => {
+  const newState = {}
+  Object.assign(newState, state, {paste: true})
+  return newState
+}
+
+const endPaste = (state, action) => {
+  const newState = {}
+  Object.assign(newState, state, {paste: false})
+  return newState
+}
+
 export const rootReducer = (state = DEFAULT_STATE, action) => {
   switch (action.type) {
     case SET_CURRENT_STYLE:
@@ -48,6 +70,12 @@ export const rootReducer = (state = DEFAULT_STATE, action) => {
       return updateCurrentStyle(state, action)
     case UPDATE_CURRENT_CELL:
       return updateCurrentCell(state, action)
+    case HANDLE_COPY:
+      return handleCopy(state, action)
+    case HANDLE_PASTE:
+      return handlePaste(state, action)
+    case END_PASTE:
+      return endPaste(state, action)
     default:
       return state
   }

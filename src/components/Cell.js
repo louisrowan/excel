@@ -1,6 +1,6 @@
 const React = require('react')
 const { connect } = require('react-redux')
-const { setCurrentStyle, updateCurrentCell } = require('../redux/ActionCreators')
+const { setCurrentStyle, updateCurrentCell, endPaste } = require('../redux/ActionCreators')
 
 const Cell = React.createClass({
 
@@ -14,23 +14,36 @@ const Cell = React.createClass({
 
   handleChange(e){
     this.setState({ value: e.target.value })
+    if (this.state.active) {
+    var param = {id: this.props.id, value: e.target.value}
+    this.props.dispatchUpdateCurrentCell(param)
+    }
   },
 
   handleFocus(){
-    this.props.dispatchUpdateCurrentCell(this.props.id)
+    var param = {id: this.props.id, value: this.state.value, style: this.state.style}
+    this.props.dispatchUpdateCurrentCell(param)
     this.props.dispatchSetCurrentStyle(this.state.style)
   },
 
   componentWillReceiveProps(props){
-    if (props.currentCell === this.props.id) {
+    if (props.paste && (props.currentCell.id === this.props.id)) {
+      this.setState({ style: props.style, value: props.value })
+      this.props.dispatchEndPaste()
+      this.props.dispatchSetCurrentStyle(props.style)
+    } else if (props.currentCell.id === this.props.id) {
       this.setState({ style: props.currentStyle, active: true })
     } else {
       this.setState({ active: false})
     }
+    
   },
 
   render(){
     var { value, style, active } = this.state
+    if (active) {
+      console.log('sty=', style)
+    }
 
     return (
       <td onFocus={this.handleFocus}>
@@ -48,7 +61,10 @@ const Cell = React.createClass({
 const mapStateToProps = (state) => {
   return {
     currentStyle: state.currentStyle,
-    currentCell: state.currentCell
+    currentCell: state.currentCell,
+    paste: state.paste,
+    value: state.value,
+    style: state.style
   }
 }
 
@@ -59,6 +75,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     dispatchUpdateCurrentCell (cell) {
       dispatch(updateCurrentCell(cell))
+    },
+    dispatchEndPaste(){
+      dispatch(endPaste())
     }
   }
 }
