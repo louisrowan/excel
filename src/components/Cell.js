@@ -25,7 +25,6 @@ const Cell = React.createClass({
 
   render(){
     var { value, style } = this.state
-    console.log(style)
 
     return (
       <td onClick={this.clicked}>
