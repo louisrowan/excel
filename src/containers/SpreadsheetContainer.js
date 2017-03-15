@@ -10,7 +10,15 @@ const SpreadsheetContainer = React.createClass({
   },
 
   getCells(){
-    return [[{},{},{}],[{},{},{}],[{},{},{}]]
+    var cells = []
+    for (var r = 0; r < 10; r++){
+      var row = []
+      for (var c = 0; c < 6; c++){
+        row.push({})
+      }
+      cells.push(row)
+    }
+    return cells
   },
 
   render(){

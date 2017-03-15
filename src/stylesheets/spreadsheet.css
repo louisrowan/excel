@@ -1,4 +1,10 @@
 #spreadsheet-container {
   padding-top: 150px;
   width: 100%;
+  background: white;
+}
+
+table {
+  border-collapse: collapse;
+
 }

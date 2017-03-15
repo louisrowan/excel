@@ -21,7 +21,7 @@ const StyleButton = React.createClass({
     return (
       <button
         style={value.style}
-        className={active ? 'active-button' : ''}
+        className={'style-button ' + (active ? 'active-button' : '')}
         onClick={() => this.handleClick(value.style)}>
          { value.name } </button>
     )

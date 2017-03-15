@@ -8,6 +8,9 @@ const MenuContainer = React.createClass({
         { name: 'B', style: {fontWeight: 'bold'}},
         { name: 'I', style: {fontStyle: 'italic'}},
         { name: 'U', style: {textDecoration: 'underline'}},
+        { name: '-', style: {textAlign: 'left'}},
+        { name: '-', style: {textAlign: 'center'}},
+        { name: '-', style: {textAlign: 'right'}}
       ]
     }
   },
