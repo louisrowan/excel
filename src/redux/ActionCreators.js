@@ -9,7 +9,8 @@ const {
   HANDLE_DRAG,
   END_DRAG,
   START_ADD_FUNCTION,
-  UPDATE_ADD_FUNCTION } = require('./Reducers')
+  UPDATE_ADD_FUNCTION,
+  END_ADD_FUNCTION } = require('./Reducers')
 
 export function setCurrentStyle(style) {
   return { type: SET_CURRENT_STYLE, style}
@@ -53,4 +54,8 @@ export function startAddFunction(){
 
 export function updateAddFunction(id){
   return { type: UPDATE_ADD_FUNCTION, id}
+}
+
+export function endAddFunction(){
+  return { type: END_ADD_FUNCTION}
 }

@@ -28,9 +28,8 @@ const Cell = React.createClass({
   },
 
   componentWillReceiveProps(props){
-    if (props.functionAdd === this.props.id){
-      if (props.addedArray.length === 2)
-        this.handleFunctionValue('add', addedArray)
+    if (props.functionAdd === this.props.id && props.addedArray){
+        this.handleFunctionValue('add', props.addedArray)
     }
     if (!props.copy) {
       this.setState({ copy: false })
@@ -50,15 +49,26 @@ const Cell = React.createClass({
   },
 
   handleFunctionValue(type, array){
+    console.log(array)
+    var elements = array.map((item) => {
+      return document.getElementById(item)
+    })
+    console.log('el', elements)
     if (type === 'add') {
-      this.setState({ value: this.createAddValue(array)})
+      this.setState({ value: this.createAddValue(elements) })
     }
-  }
+  },
 
-  createAddValue(array){
-    var first = document.getElementById(array[0])
-    var second = document.getElementById(array[1])
-  }
+  createAddValue(items){
+    var val = function(items){
+      console.log(items)
+      items.reduce((acc, val) =>{
+        return acc += val
+      }), 0
+    }
+    console.log('val = ', val())
+    return val()
+  },
 
   mouseOver(){
     // if (this.props.dragged) {
@@ -120,7 +130,8 @@ const mapStateToProps = (state) => {
     value: state.value,
     style: state.style,
     dragged: state.dragged,
-    functionAdd: state.functionAdd
+    functionAdd: state.functionAdd,
+    addedArray: state.addedArray
   }
 }
 
