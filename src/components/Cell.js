@@ -1,6 +1,6 @@
 const React = require('react')
 const { connect } = require('react-redux')
-const { setCurrentStyle, updateCurrentCell, endPaste, handleDrag } = require('../redux/ActionCreators')
+const { setCurrentStyle, updateCurrentCell, endPaste, handleDrag, updateAddFunction } = require('../redux/ActionCreators')
 
 const Cell = React.createClass({
 
@@ -28,6 +28,10 @@ const Cell = React.createClass({
   },
 
   componentWillReceiveProps(props){
+    if (props.functionAdd === this.props.id){
+      if (props.addedArray.length === 2)
+        this.handleFunctionValue('add', addedArray)
+    }
     if (!props.copy) {
       this.setState({ copy: false })
     }
@@ -44,6 +48,17 @@ const Cell = React.createClass({
     }
     
   },
+
+  handleFunctionValue(type, array){
+    if (type === 'add') {
+      this.setState({ value: this.createAddValue(array)})
+    }
+  }
+
+  createAddValue(array){
+    var first = document.getElementById(array[0])
+    var second = document.getElementById(array[1])
+  }
 
   mouseOver(){
     // if (this.props.dragged) {
@@ -66,6 +81,12 @@ const Cell = React.createClass({
 
   },
 
+  handleClick(){
+    if (this.props.functionAdd){
+      this.props.dispatchUpdateAddFunction(this.props.id)
+    }
+  },
+
   render(){
     var { value, style, active, copy } = this.state
     var { id } = this.props
@@ -76,7 +97,8 @@ const Cell = React.createClass({
 
     return (
       <td onMouseOver={this.mouseOver}
-      onFocus={this.handleFocus}>
+      onFocus={this.handleFocus}
+      onClick={this.handleClick}>
         <input className={'input-cell ' + cellClass}
           style={style}
           type='text'
@@ -97,7 +119,8 @@ const mapStateToProps = (state) => {
     copy: state.copy,
     value: state.value,
     style: state.style,
-    dragged: state.dragged
+    dragged: state.dragged,
+    functionAdd: state.functionAdd
   }
 }
 
@@ -114,6 +137,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     dispatchHandleDrag(e){
       dispatch(handleDrag(e))
+    },
+    dispatchUpdateAddFunction(id){
+      dispatch(updateAddFunction(id))
     }
   }
 }

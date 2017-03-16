@@ -1,7 +1,7 @@
 const React = require('react')
 const StyleButton = require('../components/StyleButton')
 const { connect } = require('react-redux')
-const { handleCopy, handlePaste } = require('../redux/ActionCreators')
+const { handleCopy, handlePaste, startAddFunction } = require('../redux/ActionCreators')
 
 const MenuContainer = React.createClass({
   getInitialState(){
@@ -19,7 +19,7 @@ const MenuContainer = React.createClass({
 
   render(){
     var { styleButtons } = this.state
-    var { dispatchHandleCopy, dispatchHandlePaste, currentCell } = this.props
+    var { dispatchHandleCopy, dispatchHandlePaste, currentCell, dispatchStartAddFunction } = this.props
 
     var buttons = styleButtons.map((style, i) => {
       return <StyleButton key={i} value={style} />
@@ -35,6 +35,10 @@ const MenuContainer = React.createClass({
         <button
           onClick={() => dispatchHandlePaste(currentCell)}>
           Paste
+        </button>
+        <button
+          onClick={() => dispatchStartAddFunction()}>
+          Add Function
         </button>
       </div>
     )
@@ -54,6 +58,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     dispatchHandlePaste(cell) {
       dispatch(handlePaste(cell))
+    },
+    dispatchStartAddFunction(){
+      dispatch(startAddFunction())
     }
   }
 }

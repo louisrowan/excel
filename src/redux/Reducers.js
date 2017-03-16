@@ -7,6 +7,8 @@ export const END_PASTE = 'end_paste'
 export const END_COPY = 'end_copy'
 export const HANDLE_DRAG = 'handle_drag'
 export const END_DRAG = 'end_drag'
+export const START_ADD_FUNCTION = 'start_add_function'
+export const UPDATE_ADD_FUNCTION = 'update_add_function'
 
 const DEFAULT_STATE = {
   currentStyle: {}
@@ -86,6 +88,23 @@ const endDrag = (state, action) => {
   return newState
 }
 
+const startAddFunction = (state, action) => {
+  const newState = {}
+  const add = {functionAdd: state.currentCell.id}
+  console.log(state.currentCell.id)
+  Object.assign(newState, state, add)
+  console.log('start add func')
+  return newState
+}
+
+const updateAddFunction = (state, action) => {
+  const newState = {}
+  const added = state.addedArray? state.addedArray : []
+  added.push(action.id)
+  Object.assign(newState, state, {addedArray: added})
+  return newState
+}
+
 export const rootReducer = (state = DEFAULT_STATE, action) => {
   switch (action.type) {
     case SET_CURRENT_STYLE:
@@ -106,6 +125,10 @@ export const rootReducer = (state = DEFAULT_STATE, action) => {
       return handleDrag(state, action)
     case END_DRAG:
       return endDrag(state, action)
+    case START_ADD_FUNCTION:
+      return startAddFunction(state, action)
+    case UPDATE_ADD_FUNCTION:
+      return updateAddFunction(state, action)
     default:
       return state
   }
