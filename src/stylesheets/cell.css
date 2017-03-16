@@ -1,0 +1,39 @@
+tr {
+
+  border: none;
+}
+
+td {
+  margin: 0;
+  padding: 0;
+  border: 1px solid rgba(164, 171, 181,.8);
+}
+
+.input-cell:hover, .input-cell:focus {
+  cursor: cell;
+  outline: none;
+}
+
+.input-cell {
+  width: 100px;
+  height: 100%;
+  border: none;
+  box-sizing: border-box;
+}
+
+.cell-active {
+  border: 2px solid green;
+}
+
+.cell-copy {
+  animation: border-animate 500ms linear infinite;
+}
+
+@keyframes border-animate {
+  0%, 100% {
+    border: 1px dashed black;
+  }
+  50% {
+    border: 1px dashed transparent;
+  }
+}

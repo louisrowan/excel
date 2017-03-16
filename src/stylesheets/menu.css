@@ -1,0 +1,15 @@
+#menu-container {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  height: 150px;
+  background: white;
+}
+
+.style-button {
+  width: 50px;
+}
+
+.active-button {
+  box-shadow: 2px 2px 2px black;
+}
